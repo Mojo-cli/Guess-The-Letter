@@ -14,7 +14,6 @@ const StartGame = (props) => {
     const proceedHandler = () => {
         if(deviceName){
             setShowDInfoBox(false);
-            console.log(deviceName);
         }else{
             return Alert.alert("Name Field Is Empty !", "Please enter your device's name.", [{text:"Sure", style:"destructive"}]);
         }
@@ -30,8 +29,12 @@ const StartGame = (props) => {
         setAlphabet(inputText.replace(/[^A-Z]/g, ''));
     }
 
-    const confirmAlphabetHandler = () => {
-        console.log(alphabet);
+    const confirmHandler = () => {
+        if(alphabet && deviceName){
+            onConfirm(alphabet, deviceName);
+        }else{
+            Alert.alert("Alphabet Field Is Empty !", "Please choose an alphabet.", [{text:"Sure", style:"destructive"}]);
+        }
     }
 
     const showDeviceBox = <Card style={styles.deviceInfoContainer}>
@@ -61,7 +64,7 @@ const StartGame = (props) => {
                                 <Button title="Reset" color={Theme.headerBgColor} onPress={resetHandler}/>
                                 </View>
                                 <View style={{width:widthToDp('20')}}>
-                                <Button title="Confirm" color={Theme.headerBgColor} onPress={confirmAlphabetHandler}/>
+                                <Button title="Confirm" color={Theme.headerBgColor} onPress={confirmHandler}/>
                                 </View>
                             </View>
     </Card>
@@ -73,6 +76,8 @@ const StartGame = (props) => {
     }else{
        content = showDeviceBox;
     }
+
+    const { onConfirm } = props;
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
