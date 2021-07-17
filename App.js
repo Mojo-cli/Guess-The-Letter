@@ -5,21 +5,35 @@ import Header from './Components/Header';
 
 import StartGame from './Screens/StartGame';
 import Game from './Screens/Game';
+import GameOver from './Screens/GameOver';
 
 export default function App() {
 
   const [ passAlphabet, setPassAlphabet ] = useState('');
   const [ passDName, setPassDName ] = useState('');
+  const [ passRounds, setPassRounds ] = useState(0);
 
   const giveMeData = (alpha, device) => {
     setPassAlphabet(alpha);
     setPassDName(device);
   }
 
+  const giveMeRounds = numOfRounds => {
+    setPassRounds(numOfRounds);
+  }
+
+  const playAgainHandler = () =>{
+    setPassAlphabet('');
+    setPassDName('');
+    setPassRounds(0);
+  }
+
   let content = <StartGame onConfirm={giveMeData}/>;
 
-  if(passAlphabet && passDName){
-    content = <Game alphabet={passAlphabet} deviceName={passDName}/>
+  if(passAlphabet && passRounds<=0){
+    content = <Game alphabet={passAlphabet} deviceName={passDName} onGameOver={giveMeRounds}/>
+  }else if(passRounds>0){
+    content = <GameOver rounds={passRounds} alphabet={passAlphabet} deviceName={passDName} onPlayAgain={playAgainHandler}/>
   }
 
   return (

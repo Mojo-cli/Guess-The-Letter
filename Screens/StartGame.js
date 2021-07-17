@@ -45,7 +45,7 @@ const StartGame = (props) => {
                                 value={deviceName}
                                 onChangeText={(text)=>setDeviceName(text)}
                             />
-                            <View style={{width:widthToDp('20')}}>
+                            <View style={{width:widthToDp('21')}}>
                                 <Button title="Proceed" color={Theme.headerBgColor} onPress={proceedHandler}/>
                             </View>
     </Card>
@@ -60,10 +60,10 @@ const StartGame = (props) => {
                                 onChangeText={alphabetIpHandler}
                             />
                             <View style={styles.buttonContainer}>
-                                <View style={{width:widthToDp('20')}}>
+                                <View style={{width:widthToDp('21')}}>
                                 <Button title="Reset" color={Theme.headerBgColor} onPress={resetHandler}/>
                                 </View>
-                                <View style={{width:widthToDp('20')}}>
+                                <View style={{width:widthToDp('21')}}>
                                 <Button title="Confirm" color={Theme.headerBgColor} onPress={confirmHandler}/>
                                 </View>
                             </View>

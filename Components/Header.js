@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         backgroundColor:Theme.headerBgColor,
         alignItems:"center",
         justifyContent:"center",
+        paddingTop:heightToDp('2')
     },
     titleText:{
         fontSize:widthToDp('5'),

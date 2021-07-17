@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 
 import Card from '../Components/Card';
+import { widthToDp, heightToDp } from '../LetMeAdjust';
+import Theme from '../Constants/Theme';
 
 const Game = (props) => {
 
     const [ phoneGuess, setPhoneGuess ] = useState(generateRandom(26));
+    const [ rounds, setRounds ] = useState(0);
 
-    const { alphabet, deviceName } = props;
+    const { alphabet, deviceName, onGameOver } = props;
 
     function generateRandom(length){
         const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -19,17 +22,25 @@ const Game = (props) => {
     }
 
     const nextGuessHandler = () => {
-        setPhoneGuess(generateRandom(26));
+        const nextGuess = generateRandom(26);
+        setPhoneGuess(nextGuess);
+        setRounds((curRound) => curRound + 1);
     }
+
+    useEffect(() => {
+        if(alphabet === phoneGuess){
+            onGameOver(rounds);
+        }
+    })
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}> {deviceName}'s Guess Is </Text>
             <Card style={styles.guessContainer}>
-                <Text style={{fontSize:40, fontWeight:"bold"}}> {phoneGuess} </Text>
+                <Text style={{fontSize:widthToDp('15%'), fontWeight:"bold"}}> {phoneGuess} </Text>
             </Card>
-            <View style={{width:150}}>
-                <Button title="Try to Guess Again !" onPress={nextGuessHandler} />
+            <View style={{width:widthToDp('50%')}}>
+                <Button title="Try to Guess Again !" onPress={nextGuessHandler} color={Theme.headerBgColor}/>
             </View>
         </View>
     )
@@ -47,17 +58,18 @@ const styles = StyleSheet.create({
         justifyContent:"center"
     },
     title:{
-        fontSize:21,
+        fontSize:widthToDp('6%'),
         fontWeight:"bold"
     },
     guessContainer:{
-        width:100,
-        height:100,
-        borderTopLeftRadius:20,
-        borderBottomRightRadius:20,
+        width:widthToDp('30%'),
+        height:heightToDp('15%'),
+        borderTopLeftRadius:widthToDp('8'),
+        borderBottomRightRadius:widthToDp('8'),
         elevation:8,
         alignItems:"center",
         justifyContent:"center",
-        margin:20
+        marginVertical:heightToDp('5'),
+        marginHorizontal:widthToDp('5')
     }
 })
